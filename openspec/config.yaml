@@ -1,0 +1,49 @@
+schema: spec-driven
+
+context: |
+  ## Spec 层级与归档策略
+
+  本项目的 OpenSpec 采用两级结构：
+
+  - **主架构文档**: `openspec/specs/spec.md` - 包含 Module Map 和架构决策记录(ADR)
+  - **能力域规范**: `openspec/specs/<capability>/spec.md` - 各能力域的详细规范
+
+  当前已定义能力域（Module Map）：
+  - `component-architecture` - 页面编排、组件层级、Props/Events 契约
+  - `data-flow` - 数据定义、composable 计算、组件消费
+  - `theme-system` - CSS 变量体系、主题切换、响应式断点
+  - `composable-patterns` - 可复用状态逻辑的接口与行为
+
+  ### 归档时的 Spec 整合策略
+
+  当归档 change 产生 delta specs 时，根据以下规则决定如何整合：
+
+  **规则 1 - 合并到已有能力域（推荐）**
+  如果 delta spec 描述的是已有能力域的实现细节、模式或最佳实践，
+  SHALL 将其 Requirements 合并到对应的能力域 spec，而不是创建独立 capability。
+
+  映射关系：
+  - 组件结构/布局/交互模式 → `component-architecture`
+  - 数据类型定义/数据流变更 → `data-flow`
+  - CSS 变量/主题/响应式 → `theme-system`
+  - Composable 函数/状态逻辑 → `composable-patterns`
+
+  **规则 2 - 新增独立能力域**
+  只有当 delta spec 描述的是一个真正独立的业务领域、功能模块或架构层级时，
+  才 SHALL 创建新的 capability，并同步更新主架构文档的 Module Map。
+
+  **规则 3 - 禁止重复**
+  SHALL NOT 既在独立 capability 中保留 spec，又合并到能力域中造成重复。
+  选择规则 1 或规则 2，不能同时应用。
+
+  ### 技术栈速览
+
+  - Vue 3 (Composition API + `<script setup>`)
+  - Vite 6 + TypeScript 5.7
+  - 纯 CSS Variables（无 CSS-in-JS）
+  - Composables 原生状态管理（无 Pinia/Vuex）
+  - localStorage 持久化
+
+rules:
+  # proposal:
+  #   - 待补充
